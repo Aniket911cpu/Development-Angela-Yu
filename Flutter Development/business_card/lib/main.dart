@@ -21,6 +21,37 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+  void sendEmail(String email) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+    if (await canLaunch(emailUri.toString())) {
+      await launch(emailUri.toString());
+    } else {
+      throw 'Could not launch email';
+    }
+  }
+
+  void makePhoneCall(String phoneNumber) async {
+    final Uri phoneCallUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunch(phoneCallUri.toString())) {
+      await launch(phoneCallUri.toString());
+    } else {
+      throw 'Could not launch phone call';
+    }
+  }
+
+  void openWebsite(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch website';
+    }
+  }
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
